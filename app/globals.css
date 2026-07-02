@@ -1,26 +1,92 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-base: #0A0A0F;
+  --bg-card: #111118;
+  --bg-elevated: #1A1A24;
+  --border-default: rgba(255,255,255,0.08);
+  --text-primary: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --text-dimmer: #475569;
+  --accent-red: #EF4444;
+  --accent-orange: #F97316;
+  --accent-amber: #F59E0B;
+  --accent-green: #10B981;
+  --accent-blue: #3B82F6;
+  --accent-grad: linear-gradient(135deg, #EF4444, #F97316);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+[data-theme="light"] {
+  --bg-base: #F8FAFC;
+  --bg-card: #FFFFFF;
+  --bg-elevated: #F1F5F9;
+  --border-default: rgba(0,0,0,0.08);
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-dimmer: #94A3B8;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+
+::placeholder { color: var(--text-dimmer); opacity: 1; }
+
+.input-themed {
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  border-radius: 0.625rem;
+  border: 1px solid var(--border-default);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.input-themed:focus { border-color: var(--accent-red); }
+
+.prose-section h2 { color: var(--text-primary); font-weight: 700; font-size: 1.05rem; margin: 0.75rem 0 0.4rem; }
+.prose-section h3 { color: var(--text-primary); font-weight: 600; font-size: 0.95rem; margin: 0.6rem 0 0.3rem; }
+.prose-section p { color: var(--text-secondary); margin: 0.4rem 0; line-height: 1.7; font-size: 0.9rem; }
+.prose-section ul, .prose-section ol { padding-left: 1.4rem; color: var(--text-secondary); margin: 0.4rem 0; }
+.prose-section li { margin: 0.3rem 0; line-height: 1.6; font-size: 0.875rem; }
+.prose-section strong { color: var(--text-primary); }
+.prose-section code { background: var(--bg-elevated); padding: 0.1rem 0.35rem; border-radius: 0.25rem; font-size: 0.8rem; color: var(--accent-orange); }
+.prose-section table { width: 100%; border-collapse: collapse; margin: 0.6rem 0; }
+.prose-section th { background: var(--bg-elevated); color: var(--text-primary); padding: 0.45rem 0.7rem; text-align: left; font-size: 0.78rem; border: 1px solid var(--border-default); }
+.prose-section td { padding: 0.45rem 0.7rem; color: var(--text-secondary); font-size: 0.82rem; border: 1px solid var(--border-default); vertical-align: top; }
+.prose-section tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+/* ── Interactive element micro-polish ── */
+button, a, [role="button"] {
+  cursor: pointer !important;
+}
+button {
+  user-select: none;
+  -webkit-user-select: none;
+}
+button:disabled {
+  cursor: not-allowed !important;
+}
+button:not(:disabled):active {
+  transform: scale(0.97);
+}
+a {
+  text-decoration: none;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ── Focus ring ── */
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--accent-grad, #6366F1);
+  outline-offset: 2px;
 }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-default); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-dimmer); }
+
+/* ── Smooth transitions on all interactive elements ── */
+button, a { transition: opacity 0.15s, transform 0.1s, box-shadow 0.15s; }
+button:not(:disabled):hover { opacity: 0.88; }
+
